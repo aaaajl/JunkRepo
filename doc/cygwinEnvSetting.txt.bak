@@ -1,0 +1,26 @@
+Cygwin Setting
+cd /usr/ssl/certs
+curl http://curl.haxx.se/ca/cacert.pem | awk 'split_after==1{n++;split_after=0} /-----END CERTIFICATE-----/ {split_after=1} {print > "cert" n ".pem"}'
+c_rehash
+
+Global setup:
+ Download and install Git
+  git config --global user.name "Archer"
+  git config --global user.email aaaajl@gmail.com
+  Add your public key
+        
+Next steps:
+  mkdir MyDroid
+  cd MyDroid
+  git init
+  touch README
+  git add README
+  git commit -m 'first commit'
+  git remote add origin git@github.com:aaaajl/MyDroid.git
+  git push origin master
+      
+Existing Git Repo?
+  cd existing_git_repo
+  git remote add origin git@github.com:aaaajl/MyDroid.git
+  git push origin master
+
