@@ -1,0 +1,32 @@
+The Open Closed Principle (OCP)
+A module should be open for extension but closed for modification.abstraction is the key to the OCP.
+
+The Liskov Substitution Principle (LSP)
+Subclasses should be substitutable for their base classes.
+
+
+The Dependency Inversion Principle (DIP)
+Depend upon Abstractions. Do not depend upon concretion
+
+The Interface Segregation Principle (ISP)
+Many client specific interfaces are better than one general purpose interface
+
+The Release Reuse Equivalency Principle (REP)
+The granule of reuse is the granule of release.
+
+
+The Common Closure Principle (CCP)
+Classes that change together, belong together
+
+
+The Common Reuse Principle (CRP)
+Classes that aren¡¯t reused together should not be grouped togethe.
+
+The Acyclic Dependencies Principle (ADP)
+The dependencies betwen packages must not form cycles.
+
+The Stable Dependencies Principle (SDP)
+Depend in the direction of stability.
+
+The Stable Abstractions Principle (SAP)
+Stable packages should be abstract packages.
