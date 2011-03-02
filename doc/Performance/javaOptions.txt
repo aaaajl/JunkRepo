@@ -95,3 +95,6 @@ Option and Default Value	Description
 
 Behavior-based Parallel Collector Turning
 Maximum Pause Time Goal -XX:MaxGCPauseMillis=n
+
+Jconsole:
+-Dcom.sun.management.jmxremote.port="9999" -Dcom.sun.management.jmxremote.authenticate="false" -Dcom.sun.management.jmxremote.ssl="false"
