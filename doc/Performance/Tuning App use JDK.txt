@@ -1,0 +1,16 @@
+ jps (sun.tools.jps)
+ 
+ jstack (sun.tools.jstack)
+ example: jstack vmid
+ 
+ jmap (sun.tools.jmap)
+ example: 
+ jmap -heap vmid
+ jmap -histo vmid or jmap -dump:live,format=b,file=
+ 
+ jhat (com.sun.tools.hat.Main)
+ example:
+ jhat -port(default7000) dump file
+ Query language:
+ select s from java.lang.String s where s.count >= 100
+ 
