@@ -3,14 +3,17 @@
  */
 package sort.stable;
 
-import sort.SortUtil;
-
 /**
  * @author aaaajl
  *
  */
 public class Insertion_InsertionSort {
-
+	/**
+	 * Worst case performance	O(n2)
+	 * Best case performance	O(n)
+	 * Average case performance	O(n2)
+	 * Worst case space complexity	O(n) total, O(1) auxiliary
+	 * */
 	public static void sort(Comparable[] data)
 	{
 		long start = System.nanoTime();

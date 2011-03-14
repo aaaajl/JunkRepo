@@ -10,6 +10,12 @@ import sort.SortUtil;
  *
  */
 public class Exchange_BubbleSort {
+	/**
+	 * Worst case performance	O(n2)
+	 * Best case performance	O(n)
+	 * Average case performance	O(n2)
+	 * Worst case space complexity	O(1) auxiliary
+	 * */
 	public static void sort(Comparable []data) throws Exception
 	{
 		long start = System.nanoTime();

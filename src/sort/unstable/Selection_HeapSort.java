@@ -10,6 +10,12 @@ import sort.SortUtil;
  *
  */
 public class Selection_HeapSort {
+	/**
+	 *Worst case performance	O(nlogn)
+	 *Best case performance		O(n),O(nlogn)
+	 *Average case performance	O(nlogn)
+	 *Worst case space complexity	O(n) total, O(1) auxiliary
+	 */
 	public static void sort(Comparable[] data) throws Exception
 	{
 		long start = System.nanoTime();

@@ -8,6 +8,12 @@ package sort.stable;
  *
  */
 public class Merge_MergeSort {
+	/**
+	 * Worst case performance	O(n log n)
+	 * Best case performance	O(n log n) typical,O(n) natural variant
+	 * Average case performance	O(n log n)
+	 * Worst case space complexity	O(n) auxiliary
+	 * */
 	public static void sort(Comparable[] data){
 		long start = System.nanoTime();
 		int len = data.length-1;

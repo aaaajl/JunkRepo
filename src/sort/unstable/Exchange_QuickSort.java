@@ -11,7 +11,12 @@ import sort.stable.Insertion_InsertionSort;
  *
  */
 public class Exchange_QuickSort {
-
+	/**
+	 * Worst case performance	O(n2)
+	 * Best case performance	O(n log n)
+	 * Average case performance	O(n log n)
+	 * Worst case space complexity	O(n)
+	 * */
 	public static void sort(Comparable[] data) throws Exception
 	{
 		long start = System.nanoTime();
@@ -24,7 +29,7 @@ public class Exchange_QuickSort {
 	private static void quickSort(Comparable[] data, int begin, int end) throws Exception {
 //		if((end-begin+1)<=4)
 //		{
-//			InsertionSortInsertion.sort(data);
+//			Insertion_InsertionSort.sort(data);
 //		}else{
 			int pivotIndex = getPivot(data,begin,end);
 			Comparable pivot = data[pivotIndex];
@@ -54,10 +59,7 @@ public class Exchange_QuickSort {
 			{
 				quickSort(data, low, end);
 			}
-			
 //		}
-		
-		
 	}
 
 	private static int getPivot(Comparable[] data, int begin, int end) {
@@ -68,7 +70,7 @@ public class Exchange_QuickSort {
 //		Comparable c = data[end];
 //		Comparable[] subData = {a,b,c};
 //		Comparable[] subDataCopy = subData.clone();
-//		InsertionSortInsertion.sort(subDataCopy);
+//		Insertion_InsertionSort.sort(subDataCopy);
 //		Comparable tmp = subDataCopy[1];
 //		if(tmp.compareTo(a)==0){
 //			returnValue = begin;

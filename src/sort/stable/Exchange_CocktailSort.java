@@ -10,6 +10,11 @@ import sort.SortUtil;
  *
  */
 public class Exchange_CocktailSort {
+	/**
+	 * Worst case performance	O(n2)
+	 * Best case performance	O(n)
+	 * Average case performance	O(n2)
+	 * */
 	public static void sort(Comparable []data) throws Exception{
 		long start = System.nanoTime();
 		int bottom =0;

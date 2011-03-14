@@ -11,7 +11,12 @@ import sort.SortUtil;
  *
  */
 public class Selection_SelectionSort{
-
+	/**
+	 * Worst case performance	O(n2)
+	 * Best case performance	O(n2)
+	 * Average case performance	O(n2)
+	 * Worst case space complexity	O(n) total, O(1) auxiliary
+	 * */
 	public static void sort(Comparable[] data) throws Exception {
 		long start = System.nanoTime();
 		int len = data.length;
