@@ -4,13 +4,13 @@
 package sort.unstable;
 
 import sort.SortUtil;
-import sort.stable.InsertionSortInsertion;
+import sort.stable.Insertion_InsertionSort;
 
 /**
  * @author aaaajl
  *
  */
-public class ExchangeSortQuickSort {
+public class Exchange_QuickSort {
 
 	public static void sort(Comparable[] data) throws Exception
 	{

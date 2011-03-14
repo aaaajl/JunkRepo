@@ -7,7 +7,7 @@ package sort.stable;
  * @author aaaajl
  *
  */
-public class MergeSortMerge {
+public class Merge_MergeSort {
 	public static void sort(Comparable[] data){
 		long start = System.nanoTime();
 		int len = data.length-1;

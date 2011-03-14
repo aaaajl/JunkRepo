@@ -9,7 +9,7 @@ import sort.SortUtil;
  * @author aaaajl
  *
  */
-public class InsertionSortInsertion {
+public class Insertion_InsertionSort {
 
 	public static void sort(Comparable[] data)
 	{

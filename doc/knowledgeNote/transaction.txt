@@ -1,0 +1,37 @@
+1.A transaction represents a sequence of operations treated as a unit to satisfy a request and to ensure database integrity. Transactions have the following features, known as ACID characteristics:
+	Atomicity – if the transaction fails, all effects it causes are rolled back. That is, either all changes made by a transaction are reflected on the data in the data store, or none of them.
+	Consistency – A transaction must transition persistent data from one consistent state to another. If a failure occurs during processing, the data must be restored to the state it was in prior to the transaction.
+	Isolation – Transactions should not affect each other. A transaction in progress, not yet committed or rolled back (these terms are explained at the end of this section), must be isolated from other transactions. Although several transactions may run concurrently, it should appear to each that all the others completed before or after it; all such concurrent transactions must effectively end in sequential order.
+	Durability – Once a transaction has successfully committed, state changes committed by that transaction must be durable and persistent, despite any failures that occur afterwards.
+
+2.In general, there are three types of transactions: flat transactions, chained transactions, and nested transactions. The J2EE Engine supports flat transactions only.
+
+3.Transaction Types:
+Local transaction
+	1 resource manager
+	1 phase commit
+Distributed (global) transaction
+	Access multiple transactional resources
+	2 phase commit
+Flat transaction
+Nested transaction
+Compensating transaction
+
+4.Transaction Isolation Level
+	TRANSACTION_SERIALIZABLE
+	Strongest level of isolation. All rows locked for duration of transaction. Can produce deadlocks! (But not if Find for Update set to false.)A transaction ensures that no other transaction can read or write to the data it accesses. Dirty reads, nonrepeatable reads and phantom reads are not possible.
+	TRANSACTION_REPEATABLE_READ
+	Transaction always reads same data during transaction. Phantom records possible. Default level of isolation set by WebSphere Studio. Usually suitable for all but most critical operations.Once a transaction has read a set of data, repeated reads of the same data return the same values, even if other transactions have subsequently modified the data. Dirty reads and nonrepeatable reads are not possible, but phantom reads are.
+	TRANSACTION_READ_COMMITTED
+	Can not read uncommitted data by another transaction, but nonrepeatable reads and phantom records possible.A transaction is not allowed to read uncommitted data. Dirty reads are not possible, but nonrepeatable reads and phantom reads are.
+	TRANSACTION_READ_UNCOMMITTED
+	Can read uncommitted data by another transaction, and nonrepeatable reads and phantom records possible.A transaction may read any data currently on a data page, regardless of whether or not the data has been committed. Dirty reads, nonrepeatable reads, and phantom reads are possible.
+	
+5.Transaction Attributes
+	TX_REQUIRED
+	TX_MANDATORY
+	TX_REQUIRES_NEW
+	TX_SUPPORTS
+	TX_NOT_SUPPORTED
+	TX_BEAN_MANAGED
+	

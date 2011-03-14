@@ -9,7 +9,7 @@ import sort.SortUtil;
  * @author aaaajl
  *
  */
-public class ExchangeSortBubble {
+public class Exchange_BubbleSort {
 	public static void sort(Comparable []data) throws Exception
 	{
 		long start = System.nanoTime();

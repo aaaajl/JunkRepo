@@ -10,7 +10,7 @@ import sort.SortUtil;
  * @author aaaajl
  *
  */
-public class SelectionSortSelection{
+public class Selection_SelectionSort{
 
 	public static void sort(Comparable[] data) throws Exception {
 		long start = System.nanoTime();

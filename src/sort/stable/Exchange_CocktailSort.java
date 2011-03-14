@@ -9,7 +9,7 @@ import sort.SortUtil;
  * @author aaaajl
  *
  */
-public class ExchangeSortCocktail {
+public class Exchange_CocktailSort {
 	public static void sort(Comparable []data) throws Exception{
 		long start = System.nanoTime();
 		int bottom =0;

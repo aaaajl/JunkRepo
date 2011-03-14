@@ -1,0 +1,6 @@
+1.Unix-style line ending ("\n"), not a Mac OS ("\r") or Windows ("\r\n") line ending.
+2.Rendering Engine
+	Trident:Maxthon、The World 、TT、GreenBrowser、AvantBrowser
+	Gecko:Mozilla FireFox
+	Presto:Opera
+	Webkit:Safari,chrome WebCore排版引擎及JavaScriptCore解析引擎
