@@ -1,9 +1,9 @@
 /**
  * 
  */
-package sort.stable;
+package algorithm.sort.stable;
 
-import sort.SortUtil;
+import algorithm.sort.SortUtil;
 
 /**
  * @author aaaajl

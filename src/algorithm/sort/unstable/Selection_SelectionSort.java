@@ -1,10 +1,10 @@
 /**
  * 
  */
-package sort.unstable;
+package algorithm.sort.unstable;
 
-import sort.ISortAlgorithm;
-import sort.SortUtil;
+import algorithm.sort.ISortAlgorithm;
+import algorithm.sort.SortUtil;
 
 /**
  * @author aaaajl

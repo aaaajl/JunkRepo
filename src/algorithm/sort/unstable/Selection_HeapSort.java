@@ -1,9 +1,9 @@
 /**
  * 
  */
-package sort.unstable;
+package algorithm.sort.unstable;
 
-import sort.SortUtil;
+import algorithm.sort.SortUtil;
 
 /**
  * @author lj04482

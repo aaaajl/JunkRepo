@@ -1,15 +1,15 @@
 /**
  * 
  */
-package sort;
+package algorithm.sort;
 
-import sort.stable.Exchange_BubbleSort;
-import sort.stable.Exchange_CocktailSort;
-import sort.stable.Insertion_InsertionSort;
-import sort.stable.Merge_MergeSort;
-import sort.unstable.Exchange_QuickSort;
-import sort.unstable.Selection_HeapSort;
-import sort.unstable.Selection_SelectionSort;
+import algorithm.sort.stable.Exchange_BubbleSort;
+import algorithm.sort.stable.Exchange_CocktailSort;
+import algorithm.sort.stable.Insertion_InsertionSort;
+import algorithm.sort.stable.Merge_MergeSort;
+import algorithm.sort.unstable.Exchange_QuickSort;
+import algorithm.sort.unstable.Selection_HeapSort;
+import algorithm.sort.unstable.Selection_SelectionSort;
 
 /**
  * @author aaaajl

@@ -1,7 +1,7 @@
 /**
  * 
  */
-package sort.stable;
+package algorithm.sort.stable;
 
 /**
  * @author aaaajl
