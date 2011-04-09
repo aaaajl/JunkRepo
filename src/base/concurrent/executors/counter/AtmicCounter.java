@@ -12,11 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class AtmicCounter implements Counter{
 
 	AtomicInteger count = new AtomicInteger(0);
-	@Override
 	public int increment() {
 		return count.getAndIncrement();
 	}
-	@Override
 	public String getCounterName() {
 		return "AtmicCounter";
 	}
