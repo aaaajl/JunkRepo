@@ -3,6 +3,8 @@
  */
 package base.thread;
 
+import java.io.FileInputStream;
+
 /**
  * @author lj04482
  *

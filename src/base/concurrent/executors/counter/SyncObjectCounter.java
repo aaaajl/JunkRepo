@@ -13,13 +13,11 @@ public class SyncObjectCounter implements Counter {
 	/* (non-Javadoc)
 	 * @see base.concurrent.executors.counter.Counter#increment()
 	 */
-	@Override
 	public int increment() {
 		synchronized (this) {
 			return count++;
 		}
 	}
-	@Override
 	public String getCounterName() {
 		return "SyncObjectCounter";
 	}

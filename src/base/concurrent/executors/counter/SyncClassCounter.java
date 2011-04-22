@@ -15,7 +15,6 @@ public class SyncClassCounter implements Counter {
 			return count++;
 		}
 	}
-	@Override
 	public String getCounterName() {
 		return "SyncClassCounter";
 	}

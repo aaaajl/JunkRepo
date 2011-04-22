@@ -1,0 +1,15 @@
+Providing highly available applications is paramount to IT service for your organization. 
+Of course, every organization strives to improve the availability of their applications. 
+Here are 5 tips to improve application availability.
+
+1.Track SLAs£¨service-level agreement£© Automatically. 
+Automating the monitoring of your application availability is a critical first step to understanding where IT service currently stands. 
+SLA monitoring can measure the effectiveness of your efforts for availability - and measurement drives performance.
+2.Monitor the application. 
+Sounds obvious, however many organizations only track the infrastructure, processes and database but not the application itself. To track the application, you need the ability to login as a user would. This as well as monitoring the components will provide a holistic picture of the application.
+3.Reduce single points of failure. 
+A thorough review of the architecture can help pinpoint single points of failure which can be addressed through viirtualization, redundancy, load balancing, clustering and other approaches.
+4.Plan for DR. 
+Disaster recovery planning is critical to ensure availability if your primary data center is down. With cloud computing, the cost of DR solutions is dropping quickly and many organizations are exploring the cloud as an extension of their infrastructure. 
+5.Implement Application Management Software. 
+These solutions can centralize the management of applications and contain the business rules to automatically ensure applications are up and running.

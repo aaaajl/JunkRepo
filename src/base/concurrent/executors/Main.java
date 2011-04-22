@@ -32,7 +32,6 @@ public class Main {
 		{
 			executor.execute(new Runnable() {
 				
-				@Override
 				public void run() {
 					counter.increment();
 					latch.countDown();
