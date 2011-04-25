@@ -1,0 +1,9 @@
+IPC: Interprocess communication
+System-level: Message,Semaphores,Share memory
+Low-level: Socket API
+
+Type of Socket:
+
+Type		Protocal						Connection
+UDP		User Datagram Protocol			Connectionless datagram		not guarantee order		
+TCP		Transmission Central Protocol 	Connection-oriented			guarantee order and validation package
