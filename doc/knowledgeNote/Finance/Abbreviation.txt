@@ -6,3 +6,4 @@ LIFFE: London International Financial Futures and Options Exchange
 ARB: Algo Research Bench
 ETS: Electonic Teller System
 MBS: Mortgage-Backed Securities
+STE: Shared Technology Environment

@@ -1,16 +1,27 @@
 1.GC algorithm:
 When evaluating a garbage collection algorithm, we might consider any or all of the following criteria:
-	Pause time. Does the collector stop the world to perform collection? For how long? Can pauses be bounded in time?
+	Pause time. 
+	Does the collector stop the world to perform collection? For how long? Can pauses be bounded in time?
 
-	Pause predictability. Can garbage collection pauses be scheduled at times that are convenient for the user program, rather than for the garbage collector?
+	Pause predictability. 
+	Can garbage collection pauses be scheduled at times that are convenient for the user program, rather than for the garbage collector?
 
-	CPU usage. What percentage of the total available CPU time is spent in garbage collection?
+	CPU usage. 
+	What percentage of the total available CPU time is spent in garbage collection?
 
-	Memory footprint. Many garbage collection algorithms require dividing the heap into separate memory spaces, some of which may be inaccessible to the user program at certain times. This means that the actual size of the heap may be several times bigger than the maximum heap residency of the user program.
+	Memory footprint. 
+	Many garbage collection algorithms require dividing the heap into separate memory spaces, 
+	some of which may be inaccessible to the user program at certain times. 
+	This means that the actual size of the heap may be several times bigger than the maximum heap residency of the user program.
 
-	Virtual memory interaction. On systems with limited physical memory, a full garbage collection may fault nonresident pages into memory to examine them during the collection process. Because the cost of a page fault is high, it is desirable that a garbage collector properly manage locality of reference.
+	Virtual memory interaction. 
+	On systems with limited physical memory, a full garbage collection may fault nonresident pages into memory to examine them during the collection process. 
+	Because the cost of a page fault is high, it is desirable that a garbage collector properly manage locality of reference.
 
-	Cache interaction. Even on systems where the entire heap can fit into main memory, which is true of virtually all Java applications, garbage collection will often have the effect of flushing data used by the user program out of the cache, imposing a performance cost on the user program.
+	Cache interaction. 
+	Even on systems where the entire heap can fit into main memory, which is true of virtually all Java applications, 
+	garbage collection will often have the effect of flushing data used by the user program out of the cache, 
+	imposing a performance cost on the user program.
 
 	Effects on program locality. While some believe that the job of the garbage collector is simply to reclaim unreachable memory, others believe that the garbage collector should also attempt to improve the reference locality of the user program. Compacting and copying collectors relocate objects during collection, which has the potential to improve locality.
 

@@ -1,0 +1,60 @@
+				|	Paradigm shift				|	Characteristics					|	Key terms			|	      Advantages				|		Disadvantages and risks			|When not to use
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+IaaS			|Infrastructure as an asset		|Usually platform independent; 		|Grid computing, 		|Avoid capital expenditure on 		|Business efficiency and productivity 	|When capital budget
+				|								|infrastructure costs are shared	|utility computing, 	|hardware and human resources;		|largely depends on the vendor's 		|is greater than
+				|								|and thus reduced; SLAs; pay by		|compute instance, 		|reduced ROI risk; low barriers 	|capabilities;potentially greater 		|operating budget
+				|								|usage;self-scaling					|hypervisor, 			|to entry;streamlined and  			|long-term cost;centralization requires | 
+				|								|									|cloudbursting, 		|automated scaling					|new/different security measures		|
+				|								|									|multi-tenant computing,| 									|										|
+				|								|									|resource pooling 		|									|										|
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------		
+PaaS			|	License purchasing			|Consumes cloud infrastructure; 	|Solution stack			|Streamlined version deployment		|Centralization requires new/different 	|N/A
+				|								|caters to agile project 			|						|									|security measures						|
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------				
+SaaS			|Software as an asset 			|SLAs; UI powered by thin-client	|Thin client;   		|Avoid capital expenditure on 		| 
+				|(business and consumer)		|applications; cloud components;	|client-server app		|software and development 			|
+				|								|communication via APIs; 			|						|resources; reduced ROI risk; 		|
+				|								|stateless; loosely coupled; 		|						|streamlined and iterative updates	|
+				|								|modular; semantic interoperability |
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Infrastructure as a Service,the key concepts of IaaS include:
+    Cloudbursting-the process of off-loading tasks to the cloud during times when the most compute resources are needed. 
+    Multi-tenant computing
+    Resource pooling
+    The hypervisor
+Most importantly, learn about the two primary facets that make IaaS special: elasticity and virtualization. 
+
+Platform as a Service (PaaS) are the computing platform and the solution stack.
+A computing platform, in its simplest form, refers to a place where software can be launched consistently as long as the code meets the standards of that platform.
+A solution stack consists of the applications that will assist in the development process as well as the deployment of the application. These applications refer to the operating system, run time environments, source control repository, and any other required middleware.
+PaaS anatomy
+Application development framework. 
+	A robust application development framework built on technology that is widely used. Ideally, you should beware of the potential for vendor lock-in here. Open source platforms such as Java™ technology are usually a safe bet in this regard.
+Ease of use. 
+	A PaaS should come with easy-to-use WYSIWYG tools that have pre-built widgets, canned UI components, drag-and-drop tools, and support for some standard IDEs. It should facilitate rapid, iterative application development.
+Business process modeling (BPM) tools. 
+	You need a strong BPM framework that allows you model your business process and build the application around it.
+Availability. 
+	The platform of choice should be accessible and available anywhere, anytime.
+Scalability. 
+	The platform should be smart enough to leverage the elastic capacity of an underlying infrastructure to handle the loads the application will be put under.
+Security. 
+	To effectively combat threats, the platform should address things like cross-site scripting, SQL injection, Denial of Service, and encryption of traffic and make it ingrained into the application development. In addition, the platform must support single sign-on capabilities for you to be able to integrate it with your remaining on-premise applications or any other cloud applications.
+Inclusive. 
+	The platform should provide the ability to include, embed, and integrate other applications built on the same platform or others.
+Portability. 
+	The platform should be agnostic to the underlying infrastructure and allow companies to move the application from another IaaS to another.
+Porting tools. 
+	To facilitate an easy and quick migration of data from the legacy on-premise application to the application based on the new platform, bulk import transformation tools are a necessary part of the platform's toolkit.
+API. To perform tasks such as user authentication and storing and retrieving files (for example, Web application files and assets) and sometimes even making calls directly to a database, the platform should have a well-documented API. This will allow your business to have the flexibility of creating and customizing a software application to interface with the platform that meets the specific needs of the company.
+
+
+Software as a Service (SaaS) provides network-based access to commercially available software.
+Four driving factors are cited by SaaS software vendors as leading to increased ROI(Return on investment):
+    Increased speed of deployment
+    Increased user adoption
+    Reduced support requirements
+    Lowered cost of implementation and upgrades
+
+
+   

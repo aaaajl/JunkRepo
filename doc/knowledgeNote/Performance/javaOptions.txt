@@ -88,7 +88,9 @@ Option and Default Value	Description
 -XX:-TraceLoaderConstraints	Trace recording of loader constraints. (Introduced in 6.)
 -XX:+PerfSaveDataToFile	Saves jvmstat binary data on exit.
 
+-XX:MaxDirectMemorySize=<value> Ability to let Java developers map memory outside the Java Object Heap
 
+-XX:ParallelGCThreads=<#cpus < 8 ? #cpus : 3 + ((5 * #cpus) / 8) >
 
 -Xincgc use the incremental algorithm.
 -Xloggc:filename write the gc log into file
@@ -98,3 +100,21 @@ Maximum Pause Time Goal -XX:MaxGCPauseMillis=n
 
 Jconsole:
 -Dcom.sun.management.jmxremote.port="9999" -Dcom.sun.management.jmxremote.authenticate="false" -Dcom.sun.management.jmxremote.ssl="false"
+
+# use parallel threads
+-XX:+UseParNewGC
+-XX:ParallelGCThreads=<#cpus < 8 ? #cpus : 3 + ((5 * #cpus) / 8) >
+-XX:+CMSParallelRemarkEnabled
+
+# size young generation for short pauses
+-XX:NewSize=4m
+-XX:MaxNewSize=< 4m * ParallelGCThreads >
+
+# promote all live young generation objects
+-XX:MaxTenuringThreshold=0
+-XX:SurvivorRatio=1024
+
+Incremental low pause collector
+Server application with 1GB of physical memory.
+#java -server -Xincgc -XX:NewSize=64m -XX:MaxNewSize=64m -Xms512m -Xmx512m
+#java -server -Xincgc -XX:NewSize=24m -XX:MaxNewSize=24m -Xms512m -Xmx512m
