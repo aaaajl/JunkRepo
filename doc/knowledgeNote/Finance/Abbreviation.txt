@@ -7,3 +7,4 @@ ARB: Algo Research Bench
 ETS: Electonic Teller System
 MBS: Mortgage-Backed Securities
 STE: Shared Technology Environment
+CMP: Citi Marketplace

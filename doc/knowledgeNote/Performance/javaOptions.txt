@@ -118,3 +118,6 @@ Incremental low pause collector
 Server application with 1GB of physical memory.
 #java -server -Xincgc -XX:NewSize=64m -XX:MaxNewSize=64m -Xms512m -Xmx512m
 #java -server -Xincgc -XX:NewSize=24m -XX:MaxNewSize=24m -Xms512m -Xmx512m
+
+GC log
+-XX:+PrintGCDetails -XX:+PrintTenuringDistribution -Xloggc:"c:\Archer\logs\gc1.log"

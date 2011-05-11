@@ -62,3 +62,53 @@ The basic algorithms:
 
 	The incremental (sometimes called train) low pause collector: this collector is used only if -XX:+UseTrainGC is passed on the command line. This collector has not changed since the J2SE Platform version 1.4.2 and is currently not under active development. It will not be supported in future releases. Please see the 1.4.2 GC Tuning Document for information on this collector.
 	
+"Serial" is a stop-the-world, copying collector which uses a single GC thread.
+"ParNew" is a stop-the-world, copying collector which uses multiple GC threads. It differs from "Parallel Scavenge" in that it has enhancements that make it usable with CMS. For example, "ParNew" does the synchronization needed so that it can run during the concurrent phases of CMS.
+"Parallel Scavenge" is a stop-the-world, copying collector which uses multiple GC threads.
+"Serial Old" is a stop-the-world, mark-sweep-compact collector that uses a single GC thread.
+"CMS" is a mostly concurrent, low-pause collector.
+"Parallel Old" is a compacting collector that uses multiple GC threads.
+
+Using the -XX flags for our collectors for jdk6,
+
+UseSerialGC is "Serial" + "Serial Old"
+UseParNewGC is "ParNew" + "Serial Old"
+UseConcMarkSweepGC is "ParNew" + "CMS" + "Serial Old". "CMS" is used most of the time to collect the tenured generation. "Serial Old" is used when a concurrent mode failure occurs.
+UseParallelGC is "Parallel Scavenge" + "Serial Old"
+UseParallelOldGC is "Parallel Scavenge" + "Parallel Old" 
+
+The low-pause collector (UseConcMarkSweepGC) 
+The number of threads used during a concurrent marking phase is ParallelCMSThreads. If it is not set on the command line it is calculated as
+(ParallelGCThreads + 3)/4)
+Our low-pause collector (UseConcMarkSweepGC) which we are usually careful to call our mostly concurrent collector has several phases, 
+two of which are stop-the-world (STW) phases. 
+STW initial mark
+Concurrent marking
+Concurrent precleaning
+STW remark
+Concurrent sweeping
+Concurrent reset 
+
+The J2SE 5 (and earlier) collector for the tenured generation was a serial mark-sweep-compact collector. 
+There were four phases of that collector.
+1. Mark all the live objects
+2. Calculate the new locations of the objects
+3. Adjust all object references to point to the new locations
+4. Move the objects to their new locations 
+
+DontCompileHugeMethods 
+-XX:-DontCompileHugeMethods method should less than 2500 lines.
+
+Something to add here is that the default value of NewRatio is platform dependent and runtime compiler (JIT) dependent. Below are the values as we get ready for the JDK6 release.
+-server on amd64     2
+-server on ia32      8
+-server on sparc     2
+-client on ia32      12
+-client on sparc     8
+
+
+A Thread Local Allocation Buffer (TLAB) is a region of Eden
+that is used for allocation by a single thread.  It enables
+a thread to do object allocation using thread local top and
+limit pointers, which is faster than doing an atomic operation
+on a top pointer that is shared across threads.

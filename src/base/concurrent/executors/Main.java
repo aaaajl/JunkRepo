@@ -22,29 +22,27 @@ import base.concurrent.executors.counter.VolatileCounter;
  */
 public class Main {
 
-	public static void runCounter(Executor executor,final Counter counter) throws Exception
-	{
+	public static void runCounter(Executor executor, final Counter counter) throws Exception {
 		long start = System.currentTimeMillis();
-		
+
 		int loop = 400000;
 		final CountDownLatch latch = new CountDownLatch(loop);
-		for(int i=0;i<loop;i++)
-		{
+		for (int i = 0; i < loop; i++) {
 			executor.execute(new Runnable() {
-				
+
 				public void run() {
 					counter.increment();
 					latch.countDown();
 				}
 			});
 		}
-		System.out.println("Thread:"+ Thread.activeCount());
+		System.out.println("Thread:" + Thread.activeCount());
 		latch.await();
 		long end = System.currentTimeMillis();
-		System.out.println("Count:"+counter.increment());
-		System.out.println(counter.getCounterName()+" Cost time:"+(end-start));
+		System.out.println("Count:" + counter.increment());
+		System.out.println(counter.getCounterName() + " Cost time:" + (end - start));
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 		ExecutorService es = Executors.newFixedThreadPool(100);
 		Counter volatileCounter = new VolatileCounter();
@@ -53,12 +51,12 @@ public class Main {
 		Counter synClazCounter = new SyncClassCounter();
 		Counter atmiCounter = new AtmicCounter();
 		Counter writelockCounter = new ReentrantLockCounter();
-		runCounter(es ,volatileCounter);
-		runCounter(es ,synMethodCounter);
-		runCounter(es ,synObjCounter);
-		runCounter(es ,synClazCounter);
-		runCounter(es ,atmiCounter);
-		runCounter(es ,writelockCounter);
+		runCounter(es, volatileCounter);
+		runCounter(es, synMethodCounter);
+		runCounter(es, synObjCounter);
+		runCounter(es, synClazCounter);
+		runCounter(es, atmiCounter);
+		runCounter(es, writelockCounter);
 		es.shutdown();
 	}
 }
