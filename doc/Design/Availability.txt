@@ -2,7 +2,7 @@ Providing highly available applications is paramount to IT service for your orga
 Of course, every organization strives to improve the availability of their applications. 
 Here are 5 tips to improve application availability.
 
-1.Track SLAs£¨service-level agreement£© Automatically. 
+1.Track SLAs service-level agreement£© Automatically. 
 Automating the monitoring of your application availability is a critical first step to understanding where IT service currently stands. 
 SLA monitoring can measure the effectiveness of your efforts for availability - and measurement drives performance.
 2.Monitor the application. 

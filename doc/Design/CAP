@@ -1,0 +1,14 @@
+CAP - Consistency, Availability and Partition-Tolerant
+Consistency. Think database consistency. A read after an update should reflect the update.
+
+Availability. Highly available web services mean every requests should succeed and receive a response.
+
+Partition-tolerance. This arise out of the desire for fault-tolerance. The service should be able to function when part of
+network fails, when a partition between data replicas will still allow the service to operate.
+
+Amazon's S3 guarantees availability and partition-tolerance but does
+not guarantee consistency.Amazon describes this as eventually consistent model.
+
+Consistency 	Paxos	Partition tolerence
+Availability	NoSql	Partition tolerence
+Consistency		RDBMS	Availability	

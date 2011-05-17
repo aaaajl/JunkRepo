@@ -1,0 +1,29 @@
+Creational Patterns
+Singleton
+Factory
+Factory Method
+Abstract Factory
+Builder
+Prototype
+
+Structural Patterns
+Adapter
+Bridge
+Composite
+Decorator
+Flyweight
+Proxy
+Facade
+
+Behavioral Patterns
+Chain of Responsibility
+Command
+Interpreter
+Iterator
+Mediator
+Memento
+Observer
+Strategy
+Template Method
+Visitor
+state
