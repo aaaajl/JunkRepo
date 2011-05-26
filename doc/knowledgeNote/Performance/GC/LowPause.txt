@@ -1,0 +1,2 @@
+ low pause collector maintains free lists for the space available in the tenured generation 
+ 

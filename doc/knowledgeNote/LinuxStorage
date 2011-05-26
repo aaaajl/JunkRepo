@@ -1,0 +1,44 @@
+Storage Architecture
+Direct-attached storage DAS
+	ATA -Advanced Technology Attachment
+	IDE -Integrated Drive Electronics
+	SCSI 
+	Fibre Channel
+	SAS -Serial Attached SCSI
+	SATA -Serial ATA
+	eSATA -external SATA
+	USB3 -Extensible Host Controller Interface
+	Firewire
+
+Storage area networks SAN
+	iFCP -Fibre Channel extension IP
+	FCoE -Fibre Channel over Ethernet
+	iSCSI -Internet SCSI
+	RDMA-iSER -Remote Directly Memory Access
+	SRP -SCSI RDMA Protocol
+	ATAoE -ATA over Ethernet
+
+Network-attached storage NAS
+	NFS -Network File System
+	SMB/CIFS -Server Message Block/Common Internet File System
+	
+Storage services:
+LVM -Logical volume management
+
+Storage features:
+Data integrity
+	DIF -Data integrity field 
+		8byte trailer: 2bytes CRC(Cyclic redundancy check), 2bytes Application tag, 4bytes Reference tag
+
+Support for solid-state disks(SSDs)
+
+File system:
+EXT3/4 -Extended file system
+ZFS
+BTRFS -Butter FS
+
+Distribute file system:
+Lustre
+Ceph
+GlusterFS -General Parallel File System
+

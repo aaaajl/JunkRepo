@@ -3,6 +3,7 @@
  */
 package algorithm.interview;
 
+
 /**
  * @author lj04482
  * 
@@ -62,5 +63,6 @@ public class AlgorithmMain {
 
 	public static void main(String[] args) {
 		System.out.println(AlgorithmMain.divisor(99, 30));
+
 	}
 }

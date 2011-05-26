@@ -1,0 +1,51 @@
+Quick Sort
+Not stable 
+O(lg(n)) extra space (see discussion)
+O(n2) time, but typically O(n·lg(n)) time
+Not adaptive 
+
+Selection Sort
+Not stable
+O(1) extra space
+O(n2) comparisons
+O(n) swaps
+Not adaptive
+
+Shell Sort
+Not stable
+O(1) extra space
+O(n^3/2) time as shown (see below)
+Adaptive: O(n·lg(n)) time when nearly sorted
+
+Heap Sort
+Not stable
+O(1) extra space (see discussion)
+O(n·lg(n)) time
+Not really adaptive
+
+Quick Sort
+Not stable
+O(lg(n)) extra space (see discussion)
+O(n2) time, but typically O(n·lg(n)) time
+Not adaptive
+
+Merge Sort
+Stable
+O(n) extra space for arrays (as shown)
+O(lg(n)) extra space for linked lists
+O(n·lg(n)) time
+Not adaptive
+Does not require random access to data
+
+Bubble Sort
+Stable
+O(1) extra space
+O(n2) comparisons and swaps
+Adaptive: O(n) when nearly sorted
+
+Insertion Sort
+Stable
+O(1) extra space
+O(n2) comparisons and swaps
+Adaptive: O(n) time when nearly sorted
+Very low overhead
