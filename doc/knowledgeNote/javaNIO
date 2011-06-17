@@ -1,0 +1,99 @@
+Net layers:
+Application 
+TCP
+IP
+Link
+
+IO request phase:
+1.waiting for data ready
+2.Copy data from kernel buffer to process buffer
+
+Block IO
+	
+Non-block IO
+
+UNIX IO model
+
+DMA copy -Direct Memory Access 
+
+BDP= Bandwidth * RTT
+BDP:Bandwidth-delay product
+RTT:Real-time Timer
+
+Direct Buffer
+1.It is therefore recommended that direct buffers be allocated primarily for large, long-lived buffers that are subject to the underlying system's native I/O operations. 
+	In general it is best to allocate direct buffers only when they yield a measureable gain in program performance.
+2.A direct byte buffer may also be created by mapping a region of a file directly into memory.
+
+Internet Protocol is designed for use in interconnected systems of packet-switched computer communication networks'.
+ARP -Address resolution protocol
+RARP -Reverse address resolution protocol
+ICMP -Internet control message protocol
+BOOTP -bottstrap protocol
+IGMP -Internet group management protocol
+UDP -User datagram protocol
+TCP -Transmission control protocol 
+
+IP consists of 
+	1. An addressing system for hosts
+	2. The IP packet format definition
+	3. The protocol proper-the rules about transmitting and receiving packetes
+NIC -Network interface controller
+
+TCP provides reliable bidirectional streaming connection between pairs of endpoint
+By streaming means data transmitted and received is treated as a continuous stream of bytes,without message boundaries.
+There are two kinds of TCP socket: 'active' and 'passive(more usually known as lisstening)'
+Server: create passive TCP socket 	-> binds it to port 		-> put into listening state 		-> loops accepting client connections
+Client: create active TCP socket 	-> connect to server port 	-> server accepts connect request 	-> server and client connected, reliably send each other any amount of data.
+
+TCP data receptions are automatically acknowledged, sequenced, and resent as necessary.
+TCP without saturating the network
+TCP rapidly and reliably adjusts to changing network conditions
+TCP implements a 'negotiated connect' to ensure server is up and running.
+TCP implement a 'negotiated close' to ensure all data in flight is transmitted and received before the connection is dropped.
+
+TCP Costs
+SYNchronize
+ACKnowledge
+1.Connection negotiation consists of three-way exchange of packets. SYN(client)-ACK(server)-ACK(client)
+	client send a SYN -> server responds a SYN/ACK -> client responds ACK   
+	The total time spent trying to connect often limited to 75 seconds or three retries. 
+	typical time for completely unsuccessful connection attempt might be 6+12+24=42 seconds.
+2.Close negotiation consists of a four-way exchange of packets. FIN-ACK&FIN-ACK
+
+Socket I/O
+Output
+1.TCP socket synchronous when local send buffer is concerned
+2.TCP socket asynchronous when network and rmote application are concerned.
+3.Always create an ObjectOutputStream before an ObjectInputStream for the same socket.
+
+Input
+1.It is best to attach a BufferedInputStream to the input stream, The buffer should be at least as large as socket receive buffer
+  This minimises context switch into the kernel and drains the socket receive buffer more quickly,
+  which in turn reduces stalling at the sender,Also minimizes switching back and forth between the JVM and JNI.    
+By contrast Socket.close is completely asynchronous by default. 
+
+Socke timeout
+1.Default delay is two hours before the dead connection is detected
+2.Time-out might be set to twice the sum of the expected time
+
+Socket Buffers
+1.The default size of these buffer is determined by the underlying platform's implementation of TCP.
+2.Origin TCP implementation send and receive buffer size both 2KB,Now the default size 28,32,64KB. 
+	8KB(WINSOCK) 28KB(OS/2) 52KB(Solaris)
+3.The method in socket set send and receive buffer only act as a hint to the underlying platform.
+4.Socket buffer sizes should be at lest three times the size of the MSS for the connection
+	MSS=MTU+40(TCP/IP header)
+	MSS:Maximum segment size
+	MTU:Maximum transmission unit
+5.Send buffer size should be at least as big as the receive buffer.
+6.Maximum throughput of a single TCP connection is limited at any one time to W/(RTT) 
+	W is current receive window, whose maximum possible size if the receive buffer size
+	RTT is round-trip time over the connection for a packet and its acknowledgement
+7.The optimum size of a send buffer on two factors: bandwidth or the time for a packet to make a round-trip between endpoints
+	capacity(bits)=bandwidth(bits/sec)*delay(sec)
+Nagle's algorithm
+It deter TCP from sending a sequence of small segments in circumstances when the data is being injected slowly. 
+By default Nagle's algorithm is enable, but can disenable setTcpNodelay(true).
+
+Channel I/O

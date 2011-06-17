@@ -1,11 +1,20 @@
-Java Lock
-
-
-Quorum NRW strategy
+Java Lock -> lock condition
+Java NIO
+Quorum NEW strategy
 Gossip protocal
 Consistent Hash implement
 Hash Ring
 Dynamo vector lock
+Hbase
+Hadoop
+UC4 - scheduling
+Oozie - user workflow and data pipelines
+Mahout -data mining
 
+Pig
+Hive
 JMS queue topic
 Enterprise Integration Patterns: Message Construction(Chrome work)
+
+Lucene
+Nutch

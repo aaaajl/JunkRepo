@@ -1,0 +1,131 @@
+Google's Map/Reduce 
+	-Input -> Mapper -> Intermediate <key/value>Pairs -> Reducer -> Output
+	-Easy to utilize resources of large distributed system without any experience
+	-Highly scalable: typically processes many terabytes of data in paralle
+	
+Mapper 	-Map is a special function that applies the function f to each element in the list 
+		 Map[f,(1,2,3,4,5)] -> {f[1],f[2],f[3],f[4],f[5]}
+		-Input: 1.The entire dataset 2.Maps all the input values to a key 3.map() is called once for each line of input
+		-Output:1.Collects<key,value> pairs 2.Passes to reducer as hashmap
+Reducer -   1.Reduce[f,x,list]	
+		 	2.Sets an accumulator 
+		 	3.Initial value is x 
+		 	4.Applies f to each element of the list plus the accumulator 
+		 	5.Result is the final value of the accumulator
+		 	6.Reduce[f,x,{a,b,c}] => f[f[f[x,a],b],c]
+		-Input:1.The output <K,V> hashmap from the mapper 2.f(x) is performed on every x with a common key
+		-Output:A <K,V> list of the output of reduce()
+Map is implicitly parallel,Reduce is executed in serial on a single node. The results of map() are copied and sorted then sent to the reduce()
+
+Map Reduce Architecture
+1.Centralized: Master – slave model
+2.JobTracker (JT): Centralized program that keeps track of slave nodes and provides interface for job submission
+3.NameNode (NN) : Similar program that controls HDFS
+4.TaskTracker (TT): Runs on each slave node, usually where data is stored.
+5.Data Node (DN): Runs on each node, deals with actual storage.
+6.Namenode and Jobtracker usually run on same node
+7.DN and TT usually run on same node.
+
+Important Terms
+-Mapper:
+-Reducer: 
+-Combiner:
+-Partitioner:
+-Counters:
+-Output collector:
+-Records:
+
+
+Master Node Responsibility:
+	-Assigns tasks and data to each node
+	-Hosts an http JobTracker on port 50030
+	-Queries each node
+	-Kill any task that does not respond
+	-Re-Batches killed tasks out to next available node.
+
+Hadoop has been demonstrated on clusters with 2000 nodes. The current design target is 10,000 node clusters
+
+Goals of HDFS
+	-Very Large Distributed File System: 10K nodes, 100 million files, 10 - 100 PB
+	-Assumes Commodity Hardware:1.Files are replicated to handle hardware failure 2.Detect failures and recovers from them
+	-Optimized for Batch Processing: 1.Data locations exposed so that computations can move to where data resides 2.Provides very high aggregate bandwidth
+
+Distributed File System
+	-Single Namespace for entire cluster 
+	-Data Coherency 
+		1.Write-once-read-many access model
+		2.Client can only append to existing files 
+	-Files are broken up into blocks
+		1.Typically 128 MB block size
+		2.Each block replicated on multiple DataNode
+	-Intelligent Client
+		1.Client can find location of blocks 
+		2.Client accesses data directly from DataNode
+NameNode Metadata
+	-Meta-data in Memory 
+		1.The entire metadata is in main memory 
+		2. No demand paging of meta-data
+	-Types of Metadata
+		1.List of files
+		2.List of Blocks for each file
+		3.List of DataNodes for each block
+		4.File attributes, e.g creation time, replication factor
+	-A Transaction Log 
+		1.Records file creations, file deletions. etc
+DataNode
+	-A Block Server
+		1.Stores data in the local file system (e.g. ext3) 
+		2.Stores meta-data of a block (e.g. CRC32)
+		3.Serves data and meta-data to Clients
+		4.Periodic validation of checksums 
+	-Block Report
+		1.Periodically sends a report of all existing blocks to the NameNode
+	-Facilitates Pipelining of Data
+		1.Forwards data to other specified DataNodes
+Block Placement
+	-Current Strategy
+		1.One replica on local node
+		2.Second replica on a remote rack
+		3.Third replica on same remote rack
+		4.Additional replicas are randomly placed
+	-Clients read from nearest replica
+	-Pluggable policy for placing block replicas
+		1.Co-locate datasets that are often used together
+Data Pipelining 
+	-Client writes block to the first DataNode
+	-The first DataNode forwards the data to the next DataNode in the Pipeline, and so on
+	-When all replicas are written, the Client moves on to write the next block in file
+NameNode Failure
+	-A Single Point of Failure
+	-Transaction Log stored in multiple directories
+		1.A directory on the local file system
+		2.A directory on a remote file system (NFS/CIFS)
+	-Need to develop a real HA solution 
+		1.work in progress: BackupNode
+Rebalancer
+	-Goal: percentage of disk full on DataNodes should be similar
+		1.Usually run when new DataNodes are added
+		2.Cluster is online when Rebalancer is active
+		3.Rebalancer is throttled to avoid network congestion 
+		4.Command line tool
+	-Disadvantages
+		1.Does not rebalance based on access patterns or load  		?
+		2.No support for automatic handling of hotspots of data 	?
+		
+Hadoop Map/Reduce
+	-The Map-Reduce programming model
+		1.Distributed processing of large data sets
+		2.Pluggable user code runs in generic framework
+	-Common design pattern in data processing 
+		cat * | grep  | sort      | unique -c | cat > file 
+     	input | map | shuffle | reduce    | output
+    -Natural for
+    	1.Log processing
+    	2.Web search indexing
+    	3.Ad-hoc querie
+Communication
+	-Hadoop RPC: Custom RPC protocol built especially for Hadoop.
+	-User must provide her own serialization implementation
+	-Heartbeat: TT sends a heartbeat every x seconds to JT
+	-Similarly DN sends heartbeats to NN
+

@@ -3,6 +3,7 @@
  */
 package distribute.hash;
 
+
 /**
  * @author lj04482
  * 
@@ -19,6 +20,7 @@ public class JvmHash {
 	}
 
 	public static void main(String[] args) {
+		System.out.println(Integer.MAX_VALUE + " " + Integer.MIN_VALUE);
 		System.out.println(JvmHash.CHM_hash(1));
 	}
 }
