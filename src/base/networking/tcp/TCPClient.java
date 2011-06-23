@@ -20,11 +20,17 @@ import base.networking.NetworkingConstants;
  */
 public class TCPClient implements Runnable {
 
+	public static final int BUFFER_SIZE = 128 * 1024;// 128k
+	public static final int TIMEOUT = 30 * 1000; // 30s
+
 	Socket socket;
 
 	public void run() {
 		try {
 			socket = new Socket(NetworkingConstants.SERVER_HOST, NetworkingConstants.SERVER_PORT);
+			socket.setReceiveBufferSize(BUFFER_SIZE);
+			socket.setSendBufferSize(BUFFER_SIZE);
+			socket.setSoTimeout(TIMEOUT);
 			OutputStream out = socket.getOutputStream();
 			PrintStream ps = new PrintStream(out, true);
 			ps.println(NetworkingConstants.INIT_SENTENCE);
