@@ -50,7 +50,17 @@ public class ConsistentHash<T> {
 		return circle.get(hash);
 	}
 
-	public static void main(String[] args) {
+	public void put(Object key, Object value) {
+		int hash = hash = hashFunction.hash(key);
+	}
 
+	public static void main(String[] args) {
+		SortedMap<Integer, Integer> circle = new TreeMap<Integer, Integer>();
+		circle.put(10, 10);
+		circle.put(23, 23);
+		circle.put(35, 35);
+		circle.put(66, 66);
+		circle.put(77, 77);
+		System.out.println(circle.tailMap(50).firstKey());
 	}
 }

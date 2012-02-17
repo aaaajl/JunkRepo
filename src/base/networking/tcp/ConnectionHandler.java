@@ -32,11 +32,11 @@ public class ConnectionHandler implements Runnable {
 		try {
 			InputStream in = socket.getInputStream();
 			// read request from the input:
-			// conversation not shown …
+			// conversation not shown ï¿½
 			OutputStream out = socket.getOutputStream();
 			// write reply to the output
 			out.flush();
-		} catch (IOException e) { /* … */
+		} catch (IOException e) { /* ï¿½*/
 		} finally {
 			try {
 				socket.close();
