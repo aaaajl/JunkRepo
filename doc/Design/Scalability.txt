@@ -1,26 +1,32 @@
 1. Offload the database
-stay away from the database as much as possible. That means don¡¯t open connections to it and don't start transactions unless you have to.
+stay away from the database as much as possible. That means don't open connections to it and don't start transactions unless you have to.
 
 2. What a difference a cache makes
-caches can greatly offload the database especially for applications accessing the database in read-only mode. In-memory cache is better than a remote in-memory cache, which is better than an on-disk one or a relational database.
+caches can greatly offload the database especially for applications accessing the database in read-only mode. 
+In-memory cache is better than a remote in-memory cache, which is better than an on-disk one or a relational database.
 
 3. Cache as coarse-grained objects as possible
-caching coarse-grained objects will save CPU and time required to interrogate n number of cache zones rather than a single cache zone. Furthermore, retrieving a full object graph saves time assembling the object graph.¡±
+caching coarse-grained objects will save CPU and time required to interrogate n number of cache zones rather than a single cache zone. 
+Furthermore, retrieving a full object graph saves time assembling the object graph.ï¿½ï¿½
 
 4. Don't store transient state permanently
 avoid storing transient data, like login session data, in a database.
 
-The state monster is a dangerous beast. As a rule of thumb, only store actual, necessary, critical and actionable business data in permanent storage (database, disk) and nothing else.
+The state monster is a dangerous beast. 
+As a rule of thumb, only store actual, necessary, critical and actionable business data in permanent storage (database, disk) and nothing else.
 
 5. Location, Location
 put things close to where they are supposed to be delivered. Instead of going through a load balancer, a web server, an application server and a database, it is faster and less consuming to go through the load balancer and the web server and retrieve some of the content from a CDN.
 
 6. Constrain concurrent access to limited resources
-if more than one request accesses the same resource and performs the same calculation, it is better to proceed with the first and let the others wait until it finishes its job to just use the final results. Letting all the threads to access the resource will only slow down the process.
+if more than one request accesses the same resource and performs the same calculation, it is better to proceed with the first 
+and let the others wait until it finishes its job to just use the final results. 
+Letting all the threads to access the resource will only slow down the process.
 
 7. Staged, asynchronous processing
 
-Separating a process through asynchronicity into discrete, separate steps separated by queues and executed by a limited number of workers/threads in each step will quite often do wonders for both scalability and performance.
+Separating a process through asynchronicity into discrete, separate steps separated by queues 
+and executed by a limited number of workers/threads in each step will quite often do wonders for both scalability and performance.
 
 8. Minimize network chatter
 try to make the application as remotely untalkative as possible because network communications are considerably slower than in-memory ones.

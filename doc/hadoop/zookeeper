@@ -1,0 +1,33 @@
+highly available, scalable, distributed, configuration, consensus, group membership, leader election, naming, coordination service
+
+Protocol Guarantees
+1)Sequential Consistency 
+	- Updates from a client will be applied in the order that they were sent.
+2) Atomicity 
+	- Updates either succeed or fail. No partial results.
+3) Single System Image 
+	- A client will see the same view of the service regardless of the server that it connects to. 
+4) Reliability 
+	- Once an update has been applied, it will persist from that time forward until a client overwrites the update.
+5) Timeliness 
+	- The clients view of the system is guaranteed to be up-to-date within a certain bound.
+	Either system changes will be seen by a client within this bound, or the client will detect a service outage.
+
+Servers
+1)All servers store a copy of the data
+2)A leader is elected at startup
+3)Followers service clients, all updates go through leader
+4)Update responses are sent when a majority of servers have persisted the change
+
+Leading
+1)Leader does not lead until a quorum of followers have synced with it.
+2)Zxid is a 64-bit number: 32-bit of epoch and 32-bit counter.
+3)The first proposal from a leader is a NEWLEADER txn that has a zxid with the epoch bits one greater than the last logged zxid and the counter set to zero.
+4)Leader accepts requests after a quorum have acked the NEWLEADER txn.
+5)Everything processed in order.
+
+DataTree
+1)DataNodes contain node data, stat, and child list
+2)Hashtable maps path to DataNode
+3)Updates logged to stable storage
+4)Rough snapshots taken periodically

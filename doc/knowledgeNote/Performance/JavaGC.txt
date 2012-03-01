@@ -58,7 +58,7 @@ The basic algorithms:
 3.GC Collector
 	The throughput collector: this collector uses a parallel version of the young generation collector. It is used if the -XX:+UseParallelGC option is passed on the command line. The tenured generation collector is the same as the serial collector.
 
-	The low pause concurrent collector: this collector is used if the -Xincgc ™ or -XX:+UseConcMarkSweepGC is passed on the command line. The concurrent collector is used to collect the tenured generation and does most of the collection concurrently with the execution of the application. The application is paused for short periods during the collection. A parallel version of the young generation copying collector is used with the concurrent collector. The concurrent low pause collector is used if the option -XX:+UseConcMarkSweepGC is passed on the command line.
+	The low pause concurrent collector: this collector is used if the -Xincgc ï¿½ or -XX:+UseConcMarkSweepGC is passed on the command line. The concurrent collector is used to collect the tenured generation and does most of the collection concurrently with the execution of the application. The application is paused for short periods during the collection. A parallel version of the young generation copying collector is used with the concurrent collector. The concurrent low pause collector is used if the option -XX:+UseConcMarkSweepGC is passed on the command line.
 
 	The incremental (sometimes called train) low pause collector: this collector is used only if -XX:+UseTrainGC is passed on the command line. This collector has not changed since the J2SE Platform version 1.4.2 and is currently not under active development. It will not be supported in future releases. Please see the 1.4.2 GC Tuning Document for information on this collector.
 	
@@ -99,7 +99,8 @@ There were four phases of that collector.
 DontCompileHugeMethods 
 -XX:-DontCompileHugeMethods method should less than 2500 lines.
 
-Something to add here is that the default value of NewRatio is platform dependent and runtime compiler (JIT) dependent. Below are the values as we get ready for the JDK6 release.
+Something to add here is that the default value of NewRatio is platform dependent and runtime compiler (JIT) dependent. 
+Below are the values as we get ready for the JDK6 release.
 -server on amd64     2
 -server on ia32      8
 -server on sparc     2
@@ -107,8 +108,6 @@ Something to add here is that the default value of NewRatio is platform dependen
 -client on sparc     8
 
 
-A Thread Local Allocation Buffer (TLAB) is a region of Eden
-that is used for allocation by a single thread.  It enables
-a thread to do object allocation using thread local top and
-limit pointers, which is faster than doing an atomic operation
+A Thread Local Allocation Buffer (TLAB) is a region of Eden that is used for allocation by a single thread.  
+It enables a thread to do object allocation using thread local top and limit pointers, which is faster than doing an atomic operation
 on a top pointer that is shared across threads.

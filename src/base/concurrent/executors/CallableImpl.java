@@ -5,8 +5,8 @@ package base.concurrent.executors;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -39,13 +39,14 @@ public class CallableImpl implements Callable<Integer> {
 	public static void main(String[] args) {
 		Callable<Integer> callable = new CallableImpl(2);
 
-		ExecutorService executor = new ScheduledThreadPoolExecutor(5);
+		ExecutorService executor = Executors.newFixedThreadPool(5);
 		Future<Integer> future = executor.submit(callable);
 		try {
+			System.out.println("Do somthing else");
 			System.out.println("Future value: " + future.get(50, TimeUnit.SECONDS));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		System.out.println("Do somthing else");
+		executor.shutdown();
 	}
 }

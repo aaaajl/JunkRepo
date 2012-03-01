@@ -1,8 +1,8 @@
 1.A transaction represents a sequence of operations treated as a unit to satisfy a request and to ensure database integrity. Transactions have the following features, known as ACID characteristics:
-	Atomicity – if the transaction fails, all effects it causes are rolled back. That is, either all changes made by a transaction are reflected on the data in the data store, or none of them.
-	Consistency – A transaction must transition persistent data from one consistent state to another. If a failure occurs during processing, the data must be restored to the state it was in prior to the transaction.
-	Isolation – Transactions should not affect each other. A transaction in progress, not yet committed or rolled back (these terms are explained at the end of this section), must be isolated from other transactions. Although several transactions may run concurrently, it should appear to each that all the others completed before or after it; all such concurrent transactions must effectively end in sequential order.
-	Durability – Once a transaction has successfully committed, state changes committed by that transaction must be durable and persistent, despite any failures that occur afterwards.
+	Atomicity if the transaction fails, all effects it causes are rolled back. That is, either all changes made by a transaction are reflected on the data in the data store, or none of them.
+	Consistency  A transaction must transition persistent data from one consistent state to another. If a failure occurs during processing, the data must be restored to the state it was in prior to the transaction.
+	Isolation  Transactions should not affect each other. A transaction in progress, not yet committed or rolled back (these terms are explained at the end of this section), must be isolated from other transactions. Although several transactions may run concurrently, it should appear to each that all the others completed before or after it; all such concurrent transactions must effectively end in sequential order.
+	Durability Once a transaction has successfully committed, state changes committed by that transaction must be durable and persistent, despite any failures that occur afterwards.
 
 2.In general, there are three types of transactions: flat transactions, chained transactions, and nested transactions. The J2EE Engine supports flat transactions only.
 

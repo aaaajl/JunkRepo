@@ -1,0 +1,26 @@
+Design Principle
+
+Five principle of class design
+1.SRP Single Responsibility Principle
+
+2.OCP Open Closed Principle
+3.LSP Liskov Substitution Principle
+4.ISP Interface Segregation Principle
+5.DIP Dependency Inversion Principle
+
+Three principles of package cohesion
+1.REP Reuse Release Equivalence Principle
+2.CCP Common Closure Principle
+3.CRP Common Reuse Principle
+
+Three principle of package coupling
+1.ADP Acyclic Dependencies Principle
+2.SDP Stable Dependencies Principle
+3.SAP Stable Abstractions Principle
+
+Design Pattern
+
+Singleton: Ensure that only one instance of a class is created and provide a global access point to the object.
+
+SEDA
+Staged Event-Driven Architecture
