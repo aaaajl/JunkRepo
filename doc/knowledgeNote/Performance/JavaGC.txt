@@ -1,43 +1,91 @@
 1.GC algorithm:
 When evaluating a garbage collection algorithm, we might consider any or all of the following criteria:
-	Pause time. 
-	Does the collector stop the world to perform collection? For how long? Can pauses be bounded in time?
+GC Factors
+	-Pause time. 
+		Does the collector stop the world to perform collection? For how long? Can pauses be bounded in time?
+	-Memory footprint. 
+		Many garbage collection algorithms require dividing the heap into separate memory spaces, 
+		some of which may be inaccessible to the user program at certain times. 
+		This means that the actual size of the heap may be several times bigger than the maximum heap residency of the user program.
+	-Pause predictability. 
+		Can garbage collection pauses be scheduled at times that are convenient for the user program, rather than for the garbage collector?
+	-LDS live data size
+	-Throughput % of time not spent in GC over a long period of time.
+	-Allocate Rate
+	-Promptness time between object death, and time when memory becomes available
+	
+APP Factors
+	-Response Time
+	-QPS
 
-	Pause predictability. 
-	Can garbage collection pauses be scheduled at times that are convenient for the user program, rather than for the garbage collector?
+System Factors
+	-Load
+	-CPU usage. 
+		What percentage of the total available CPU time is spent in garbage collection?
+	-Virtual memory interaction. 
+		On systems with limited physical memory, a full garbage collection may fault nonresident pages into memory to examine them during the collection process. 
+		Because the cost of a page fault is high, it is desirable that a garbage collector properly manage locality of reference.
 
-	CPU usage. 
-	What percentage of the total available CPU time is spent in garbage collection?
+	-Cache interaction. 
+		Even on systems where the entire heap can fit into main memory, which is true of virtually all Java applications, 
+		garbage collection will often have the effect of flushing data used by the user program out of the cache, 
+		imposing a performance cost on the user program.
+	
+	Effects on program locality. While some believe that the job of the garbage collector is simply to reclaim unreachable memory, 
+	others believe that the garbage collector should also attempt to improve the reference locality of the user program. 
+	Compacting and copying collectors relocate objects during collection, which has the potential to improve locality.
 
-	Memory footprint. 
-	Many garbage collection algorithms require dividing the heap into separate memory spaces, 
-	some of which may be inaccessible to the user program at certain times. 
-	This means that the actual size of the heap may be several times bigger than the maximum heap residency of the user program.
-
-	Virtual memory interaction. 
-	On systems with limited physical memory, a full garbage collection may fault nonresident pages into memory to examine them during the collection process. 
-	Because the cost of a page fault is high, it is desirable that a garbage collector properly manage locality of reference.
-
-	Cache interaction. 
-	Even on systems where the entire heap can fit into main memory, which is true of virtually all Java applications, 
-	garbage collection will often have the effect of flushing data used by the user program out of the cache, 
-	imposing a performance cost on the user program.
-
-	Effects on program locality. While some believe that the job of the garbage collector is simply to reclaim unreachable memory, others believe that the garbage collector should also attempt to improve the reference locality of the user program. Compacting and copying collectors relocate objects during collection, which has the potential to improve locality.
-
-	Compiler and runtime impact. Some garbage collection algorithms require significant cooperation from the compiler or runtime environment, such as updating reference counts whenever a pointer assignment is performed. This creates both work for the compiler, which must generate these bookkeeping instructions, and overhead for the runtime environment, which must execute these additional instructions. What is the performance impact of these requirements? Does it interfere with compile-time optimizations?
+	Compiler and runtime impact. Some garbage collection algorithms require significant cooperation from the compiler or runtime environment, 
+	such as updating reference counts whenever a pointer assignment is performed. This creates both work for the compiler, 
+	which must generate these bookkeeping instructions, and overhead for the runtime environment, which must execute these additional instructions. 
+	What is the performance impact of these requirements? Does it interfere with compile-time optimizations?
+	
 The basic algorithms:
 	Reference counting
-		The most straightforward garbage collection strategy is reference counting. Reference counting is simple, but requires significant assistance from the compiler and imposes overhead on the mutator (the term for the user program, from the perspective of the garbage collector). Each object has an associated reference count -- the number of active references to that object. If an object's reference count is zero, it is garbage (unreachable from the user program) and can be recycled. Every time a pointer reference is modified, such as through an assignment statement, or when a reference goes out of scope, the compiler must generate code to update the referenced object's reference count. If an object's reference count goes to zero, the runtime can reclaim the block immediately (and decrement the reference counts of any blocks that the reclaimed block references), or place it on a queue for deferred collection.
+		The most straightforward garbage collection strategy is reference counting. 
+		Reference counting is simple, but requires significant assistance from the compiler and imposes overhead on the mutator 
+		(the term for the user program, from the perspective of the garbage collector). 
+		Each object has an associated reference count -- the number of active references to that object. 
+		If an object's reference count is zero, it is garbage (unreachable from the user program) and can be recycled. 
+		Every time a pointer reference is modified, such as through an assignment statement, or when a reference goes out of scope, 
+		the compiler must generate code to update the referenced object's reference count. If an object's reference count goes to zero, 
+		the runtime can reclaim the block immediately (and decrement the reference counts of any blocks that the reclaimed block references), 
+		or place it on a queue for deferred collection.
 	Tracing
-		None of the standard garbage collectors in the JDK uses reference counting; instead, they all use some form of tracing collector. A tracing collector stops the world (although not necessarily for the entire duration of the collection) and starts tracing objects, starting at the root set and following references until all reachable objects have been examined. Roots can be found in program registers, in local (stack-based) variables in each thread's stack, and in static variables.
+		None of the standard garbage collectors in the JDK uses reference counting; instead, they all use some form of tracing collector. 
+		A tracing collector stops the world (although not necessarily for the entire duration of the collection) and starts tracing objects, 
+		starting at the root set and following references until all reachable objects have been examined. 
+		Roots can be found in program registers, in local (stack-based) variables in each thread's stack, and in static variables.
 	Mark-sweep
-		The most basic form of tracing collector, first proposed by Lisp inventor John McCarthy in 1960, is the mark-sweep collector, in which the world is stopped and the collector visits each live node, starting from the roots, and marks each node it visits. When there are no more references to follow, collection is complete, and then the heap is swept (that is, every object in the heap is examined), and any object not marked is reclaimed as garbage and returned to the free list. Figure 1 illustrates a heap prior to garbage collection; the shaded blocks are garbage because they are unreachable by the user program:Mark-sweep is simple to implement, can reclaim cyclic structures easily, and doesn't place any burden on the compiler or mutator like reference counting does. But it has deficiencies -- collection pauses can be long, and the entire heap is visited in the sweep phase, which can have very negative performance consequences on virtual memory systems where the heap may be paged.	The big problem with mark-sweep is that every active (that is, allocated) object, whether reachable or not, is visited during the sweep phase. Because a significant percentage of objects are likely to be garbage, this means that the collector is spending considerable effort examining and handling garbage. Mark-sweep collectors also tend to leave the heap fragmented, which can cause locality issues and can also cause allocation failures even when sufficient free memory appears to be available.
+		The most basic form of tracing collector, first proposed by Lisp inventor John McCarthy in 1960, is the mark-sweep collector, 
+		in which the world is stopped and the collector visits each live node, starting from the roots, and marks each node it visits. 
+		When there are no more references to follow, collection is complete, and then the heap is swept 
+		(that is, every object in the heap is examined), and any object not marked is reclaimed as garbage and returned to the free list. 
+		Figure 1 illustrates a heap prior to garbage collection; the shaded blocks are garbage because they are unreachable by the user program:
+		Mark-sweep is simple to implement, can reclaim cyclic structures easily, and doesn't place any burden on the compiler or 
+		mutator like reference counting does. But it has deficiencies -- collection pauses can be long, and the entire heap is visited 
+		in the sweep phase, which can have very negative performance consequences on virtual memory systems where the heap may be paged.	
+		The big problem with mark-sweep is that every active (that is, allocated) object, whether reachable or not, 
+		is visited during the sweep phase. Because a significant percentage of objects are likely to be garbage, 
+		this means that the collector is spending considerable effort examining and handling garbage. Mark-sweep collectors also tend to 
+		leave the heap fragmented, which can cause locality issues and can also cause allocation failures even when sufficient 
+		free memory appears to be available.
 	Copying
-		In a copying collector, another form of tracing collector, the heap is divided into two equally sized semi-spaces, one of which contains active data and the other is unused. When the active space fills up, the world is stopped and live objects are copied from the active space into the inactive space. The roles of the spaces are then flipped, with the old inactive space becoming the new active space.
-		Copying collection has the advantage of only visiting live objects, which means garbage objects will not be examined, nor will they need to be paged into memory or brought into the cache. The duration of collection cycles in a copying collector is driven by the number of live objects. However, copying collectors have the added cost of copying the data from one space to another, adjusting all references to point to the new copy. In particular, long-lived objects will be copied back and forth on every collection.
+		In a copying collector, another form of tracing collector, the heap is divided into two equally sized semi-spaces, 
+		one of which contains active data and the other is unused. When the active space fills up, the world is stopped and 
+		live objects are copied from the active space into the inactive space. The roles of the spaces are then flipped, 
+		with the old inactive space becoming the new active space.
+		Copying collection has the advantage of only visiting live objects, which means garbage objects will not be examined, 
+		nor will they need to be paged into memory or brought into the cache. The duration of collection cycles in a copying 
+		collector is driven by the number of live objects. However, copying collectors have the added cost of copying the data 
+		from one space to another, adjusting all references to point to the new copy. In particular, long-lived objects will be 
+		copied back and forth on every collection.
 	Heap compaction
-		Copying collectors have another benefit, which is that the set of live objects are compacted into the bottom of the heap. This not only improves locality of reference of the user program and eliminates heap fragmentation, but also greatly reduces the cost of object allocation -- object allocation becomes a simple pointer addition on the top-of-heap pointer. There is no need to maintain free lists or look-aside lists, or perform best-fit or first-fit algorithms -- allocating N bytes is as simple as adding N to the top-of-heap pointer and returning its previous value, as suggested in Listing 1:
+		Copying collectors have another benefit, which is that the set of live objects are compacted into the bottom of the heap. 
+		This not only improves locality of reference of the user program and eliminates heap fragmentation, 
+		but also greatly reduces the cost of object allocation -- object allocation becomes a simple pointer addition on the top-of-heap pointer. 
+		There is no need to maintain free lists or look-aside lists, or perform best-fit or first-fit algorithms -- 
+		allocating N bytes is as simple as adding N to the top-of-heap pointer and returning its previous value, as suggested in Listing 1:
 		void *malloc(int n) { 
 		    if (heapTop - heapStart < n)
 		        doGarbageCollection();
@@ -46,9 +94,21 @@ The basic algorithms:
 		    heapStart += n;
 		    return wasStart;
 		}
-		Developers who have implemented sophisticated memory management schemes for non-garbage-collected languages may be surprised at how inexpensive allocation is -- a simple pointer addition -- in a copying collector. This may be one of the reasons for the pervasive belief that object allocation is expensive -- earlier JVM implementations did not use copying collectors, and developers are still implicitly assuming allocation cost is similar to other languages, like C, when in fact it may be significantly cheaper in the Java runtime. Not only is the cost of allocation smaller, but for objects that become garbage before the next collection cycle, the deallocation cost is zero, as the garbage object will be neither visited nor copied.
+		Developers who have implemented sophisticated memory management schemes for non-garbage-collected languages may be surprised at 
+		how inexpensive allocation is -- a simple pointer addition -- in a copying collector. This may be one of the reasons for 
+		the pervasive belief that object allocation is expensive -- earlier JVM implementations did not use copying collectors, 
+		and developers are still implicitly assuming allocation cost is similar to other languages, like C, when in fact it may be 
+		significantly cheaper in the Java runtime. Not only is the cost of allocation smaller, but for objects that become garbage 
+		before the next collection cycle, the deallocation cost is zero, as the garbage object will be neither visited nor copied.
 	Mark-Compact
-		The copying algorithm has excellent performance characteristics, but it has the drawback of requiring twice as much memory as a mark-sweep collector. The mark-compact algorithm combines mark-sweep and copying in a way that avoids this problem, at the cost of some increased collection complexity. Like mark-sweep, mark-compact is a two-phase process, where each live object is visited and marked in the marking phase. Then, marked objects are copied such that all the live objects are compacted at the bottom of the heap. If a complete compaction is performed at every collection, the resulting heap is similar to the result of a copying collector -- there is a clear demarcation between the active portion of the heap and the free area, so that allocation costs are comparable to a copying collector. Long-lived objects tend to accumulate at the bottom of the heap, so they are not copied repeatedly as they are in a copying collector.
+		The copying algorithm has excellent performance characteristics, but it has the drawback of requiring twice as much memory 
+		as a mark-sweep collector. The mark-compact algorithm combines mark-sweep and copying in a way that avoids this problem, 
+		at the cost of some increased collection complexity. Like mark-sweep, mark-compact is a two-phase process, where each live 
+		object is visited and marked in the marking phase. Then, marked objects are copied such that all the live objects are compacted 
+		at the bottom of the heap. If a complete compaction is performed at every collection, the resulting heap is similar to the result 
+		of a copying collector -- there is a clear demarcation between the active portion of the heap and the free area, so that allocation 
+		costs are comparable to a copying collector. Long-lived objects tend to accumulate at the bottom of the heap, so they are not 
+		copied repeatedly as they are in a copying collector.
 	Incremental Collecting
 	Generational Collecting
 
@@ -56,18 +116,36 @@ The basic algorithms:
 	Scavenge GC
 	Full GC
 3.GC Collector
-	The throughput collector: this collector uses a parallel version of the young generation collector. It is used if the -XX:+UseParallelGC option is passed on the command line. The tenured generation collector is the same as the serial collector.
+The throughput collector: this collector uses a parallel version of the young generation collector. 
+	It is used if the -XX:+UseParallelGC option is passed on the command line. 
+	The tenured generation collector is the same as the serial collector.
 
-	The low pause concurrent collector: this collector is used if the -Xincgc � or -XX:+UseConcMarkSweepGC is passed on the command line. The concurrent collector is used to collect the tenured generation and does most of the collection concurrently with the execution of the application. The application is paused for short periods during the collection. A parallel version of the young generation copying collector is used with the concurrent collector. The concurrent low pause collector is used if the option -XX:+UseConcMarkSweepGC is passed on the command line.
+The low pause concurrent collector: this collector is used if the -Xincgc or -XX:+UseConcMarkSweepGC is passed on the command line. 
+	The concurrent collector is used to collect the tenured generation and does most of the collection concurrently with 
+	the execution of the application. The application is paused for short periods during the collection. 
+	A parallel version of the young generation copying collector is used with the concurrent collector. 
+	The concurrent low pause collector is used if the option -XX:+UseConcMarkSweepGC is passed on the command line.
 
-	The incremental (sometimes called train) low pause collector: this collector is used only if -XX:+UseTrainGC is passed on the command line. This collector has not changed since the J2SE Platform version 1.4.2 and is currently not under active development. It will not be supported in future releases. Please see the 1.4.2 GC Tuning Document for information on this collector.
+The incremental (sometimes called train) low pause collector: this collector is used only if -XX:+UseTrainGC is passed on the command line. 
+	This collector has not changed since the J2SE Platform version 1.4.2 and is currently not under active development. 
+	It will not be supported in future releases. Please see the 1.4.2 GC Tuning Document for information on this collector.
 	
 "Serial" is a stop-the-world, copying collector which uses a single GC thread.
-"ParNew" is a stop-the-world, copying collector which uses multiple GC threads. It differs from "Parallel Scavenge" in that it has enhancements that make it usable with CMS. For example, "ParNew" does the synchronization needed so that it can run during the concurrent phases of CMS.
+"ParNew" is a stop-the-world, copying collector which uses multiple GC threads. 
+	It differs from "Parallel Scavenge" in that it has enhancements that make it usable with CMS. 
+	For example,"ParNew" does the synchronization needed so that it can run during the concurrent phases of CMS.
 "Parallel Scavenge" is a stop-the-world, copying collector which uses multiple GC threads.
 "Serial Old" is a stop-the-world, mark-sweep-compact collector that uses a single GC thread.
 "CMS" is a mostly concurrent, low-pause collector.
 "Parallel Old" is a compacting collector that uses multiple GC threads.
+
+Parallel
+-YGC:Parallel Scavenge(PS)
+-FGC:Parallel MSC(PSOld), Parallel Compacting(ParOld)
+
+Concurrent
+-YGC:ParNew
+-FGC:CMS,fail then Serial MSC
 
 Using the -XX flags for our collectors for jdk6,
 
