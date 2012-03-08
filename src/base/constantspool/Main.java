@@ -3,6 +3,7 @@
  */
 package base.constantspool;
 
+
 /**
  * @author lj04482
  *
@@ -91,7 +92,7 @@ public class Main {
 		Short d = Short.valueOf(""+value);
 		System.out.format("a==b?%s%n", a==b);
 		System.out.format("a==c?%s%n", a==c);
-		System.out.format("a==d?%s%n", a==d);
+		System.out.format("a==d?%s%n", a == c);
 		System.out.format("c==d?%s%n", c==d);
 	}
 	
@@ -104,7 +105,7 @@ public class Main {
 		Byte d = Byte.valueOf(""+value);
 		System.out.format("a==b?%s%n", a==b);
 		System.out.format("a==c?%s%n", a==c);
-		System.out.format("a==d?%s%n", a==d);
+		System.out.format("a==d?%s%n", a == c);
 		System.out.format("c==d?%s%n", c==d);
 	}
 	
