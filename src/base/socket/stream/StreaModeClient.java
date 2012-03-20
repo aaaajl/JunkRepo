@@ -3,9 +3,8 @@
  */
 package base.socket.stream;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
@@ -23,12 +22,14 @@ public class StreaModeClient implements ISender {
 		try {
 			InetAddress acceptorHost = InetAddress.getByName(hostName);
 			Socket clientSocket = new Socket(acceptorHost, SocketConstant.PORT);
-			BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-			System.out.println("Client:" + br.readLine());
-			PrintStream ps = new PrintStream(clientSocket.getOutputStream());
-			ps.println("received your message.. Thanks");
-			ps.flush();
+			ObjectOutputStream out = new ObjectOutputStream(clientSocket.getOutputStream());
+			out.writeObject(message);
+			out.flush();
+			ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+			System.out.println("Client:" + in.readObject());
 			clientSocket.close();
+			out.close();
+			in.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -36,6 +37,7 @@ public class StreaModeClient implements ISender {
 	}
 
 	public static void main(String[] args) {
-		new StreaModeClient().send("localhost", "");
+		new StreaModeClient().send("localhost", "ttttttttttttttt");
+		new StreaModeClient().send("localhost", "aaaaaaaaaaaaaaaaa");
 	}
 }

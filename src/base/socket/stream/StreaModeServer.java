@@ -3,12 +3,13 @@
  */
 package base.socket.stream;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import base.socket.IReciver;
 import base.socket.SocketConstant;
@@ -19,6 +20,8 @@ import base.socket.SocketConstant;
  */
 public class StreaModeServer implements IReciver {
 
+	ExecutorService executor = Executors.newFixedThreadPool(10);
+
 	@Override
 	public void recive(int serverPortNumber) {
 		ServerSocket connectionSocket = null;
@@ -27,13 +30,7 @@ public class StreaModeServer implements IReciver {
 			boolean a = true;
 			while (a) {
 				Socket dataSocket = connectionSocket.accept();
-				PrintStream socketOutput = new PrintStream(dataSocket.getOutputStream());
-				socketOutput.println("AAAAAAAAAAAAAAAAAAAA dddddddddddddddddd");
-				System.out.println("Server: Sent response to client…");
-				BufferedReader br = new BufferedReader(new InputStreamReader(dataSocket.getInputStream()));
-				System.out.println(br.readLine());
-				socketOutput.flush();
-				dataSocket.close();
+				executor.execute(new Task(dataSocket));
 			}
 
 		} catch (Exception e) {
@@ -45,6 +42,34 @@ public class StreaModeServer implements IReciver {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	class Task implements Runnable {
+		Socket dataSocket;
+
+		private Task(Socket dataSocket) {
+			super();
+			this.dataSocket = dataSocket;
+		}
+
+		@Override
+		public void run() {
+			try {
+				System.out.println("Connect OPEN");
+				ObjectInputStream in = new ObjectInputStream(dataSocket.getInputStream());
+				System.out.println((String) in.readObject());
+				ObjectOutputStream out = new ObjectOutputStream(dataSocket.getOutputStream());
+				out.writeObject("Sucess");
+				out.flush();
+				out.close();
+				in.close();
+				dataSocket.close();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		}
+
 	}
 
 	public static void main(String[] args) {
