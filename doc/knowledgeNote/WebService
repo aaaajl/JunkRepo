@@ -1,0 +1,11 @@
+A Web service is a method of communication between two electronic devices over the web (internet).
+The W3C defines a "Web service" as "a software system designed to support interoperable machine-to-machine interaction over a network".
+We can identify two major classes of Web services, 
+REST-compliant Web services,in which the primary purpose of the service is to manipulate XML representations of Web resources using a uniform set of "stateless" operations
+arbitrary Web services, in which the service may expose an arbitrary set of operations.
+
+UDDI Universal Description, Discovery and Integration
+WSDL Web Services Description Language
+SOAP Simple Object Access Protocol
+OASIS Organization for the Advancement of Structured Information Standards
+The Web Services Description Language (WSDL, pronounced 'wiz-dul') is an XML-based language that is used for describing the functionality offered by a Web service
